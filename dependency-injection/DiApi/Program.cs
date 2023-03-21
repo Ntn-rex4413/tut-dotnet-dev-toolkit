@@ -9,9 +9,11 @@ app.UseHttpsRedirection();
 
 app.MapGet("/getdata", () =>
 {
-    var repo = new SqlDataRepo();
+    //var repo = new SqlDataRepo();
+    var repo = new NoSqlDataRepo();
 
-    repo.ReturnData();
+    //repo.ReturnData();
+    repo.GetData();
 
     return Results.Ok();
 });
