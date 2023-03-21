@@ -1,9 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <!--in command prompt on the same level as .csproj file run: "dotnet user-secrets init"-->
+    <!--can prefix with something recognizable-->
+    <UserSecretsId>DDT-US_f50e632c-936c-47ca-bb6e-682a356e634d</UserSecretsId>
+    <!--then to create a user secret run: dotnet user-secrets set "Password" "somevalueforpassword"-->
   </PropertyGroup>
 
   <ItemGroup>
