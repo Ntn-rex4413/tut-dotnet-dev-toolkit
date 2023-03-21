@@ -4,11 +4,16 @@ namespace DiApi.Data
 {
     public class SqlDataRepo : IDataRepo
     {
-        private readonly IDataService _dataService;
+        // if there's a need for some reason to use a scoped service within a singleton service
+        // like in this example
+        // it can be done by creating a scope with scope factory which disposes of the scoped
+        // service instance
 
-        public SqlDataRepo(IDataService dataService)
+        private readonly IServiceScopeFactory _scopeFactory;
+
+        public SqlDataRepo(IServiceScopeFactory scopeFactory)
         {
-            _dataService = dataService;
+            _scopeFactory = scopeFactory;
         }
 
         public string ReturnData()
@@ -17,9 +22,14 @@ namespace DiApi.Data
 
             Console.WriteLine("--> Getting data from SQL Database...");
 
-            _dataService.GetProductData("https://something.com/api");
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                var dataService = scope.ServiceProvider.GetRequiredService<IDataService>();
 
-            Console.ResetColor();
+                dataService.GetProductData("https://something.com/api");
+
+                Console.ResetColor();
+            }
 
             return ("SQL Data from DB");
         }
