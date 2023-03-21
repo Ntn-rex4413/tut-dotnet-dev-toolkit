@@ -3,8 +3,8 @@
 // specify configuration sources and order of them
 IConfigurationBuilder builder = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-    .AddUserSecrets(typeof(Program).Assembly, optional: true);
+    .AddUserSecrets(typeof(Program).Assembly, optional: true)
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
 IConfigurationRoot config = builder.Build();
 
