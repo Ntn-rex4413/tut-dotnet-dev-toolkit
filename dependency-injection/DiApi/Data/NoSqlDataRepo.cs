@@ -1,8 +1,8 @@
 ﻿namespace DiApi.Data
 {
-    public class NoSqlDataRepo
+    public class NoSqlDataRepo : IDataRepo
     {
-        public string GetData()
+        public string ReturnData()
         {
             Console.ForegroundColor = ConsoleColor.Red;
 

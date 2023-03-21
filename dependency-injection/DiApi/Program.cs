@@ -12,8 +12,7 @@ app.MapGet("/getdata", () =>
     //var repo = new SqlDataRepo();
     var repo = new NoSqlDataRepo();
 
-    //repo.ReturnData();
-    repo.GetData();
+    repo.ReturnData();
 
     return Results.Ok();
 });
