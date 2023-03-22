@@ -6,6 +6,7 @@ namespace SerializerConsole.Models
     {
         public int Id { get; set; }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? FirstName { get; set; }
 
         // value specified in decorator overrides JsonSerializerOptions' NamingPolicy (e.g. casing);
@@ -14,6 +15,7 @@ namespace SerializerConsole.Models
 
         public int Age { get; set; }
 
+        [JsonIgnore]
         public bool IsAlive { get; set; }
 
         public Address? Address { get; set; }

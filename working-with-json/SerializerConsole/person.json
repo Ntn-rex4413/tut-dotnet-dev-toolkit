@@ -1,9 +1,7 @@
 {
   "id": 1,
-  "firstName": "Sean",
   "surname": "Connery",
   "age": 90,
-  "isAlive": false,
   "address": {
     "streetName": "1 main street",
     "city": "New York",
