@@ -11,5 +11,9 @@
         public int Age { get; set; }
 
         public bool IsAlive { get; set; }
+
+        public Address? Address { get; set; }
+
+        public IList<Phone>? Phones { get; set; }
     }
 }

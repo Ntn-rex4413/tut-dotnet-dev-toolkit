@@ -3,5 +3,20 @@
   "firstName": "Sean",
   "lastName": "Connery",
   "age": 90,
-  "isAlive": false
+  "isAlive": false,
+  "address": {
+    "streetName": "1 main street",
+    "city": "New York",
+    "zipCode": "12345"
+  },
+  "phones": [
+    {
+      "phoneType": "Home",
+      "phoneNumber": "03452131258"
+    },
+    {
+      "phoneType": "Mobile",
+      "phoneNumber": "03333337258"
+    }
+  ]
 }

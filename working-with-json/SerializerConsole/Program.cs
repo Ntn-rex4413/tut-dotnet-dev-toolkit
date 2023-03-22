@@ -8,7 +8,18 @@ var person = new Person
     FirstName = "Sean",
     LastName = "Connery",
     Age = 90,
-    IsAlive = false
+    IsAlive = false,
+    Address = new Address
+    {
+        StreetName = "1 main street",
+        City = "New York",
+        ZipCode = "12345"
+    },
+    Phones = new List<Phone>()
+    {
+        new Phone{PhoneType = "Home", PhoneNumber = "03452131258"},
+        new Phone{PhoneType = "Mobile", PhoneNumber = "03333337258"},
+    }
 };
 
 var opt = new JsonSerializerOptions
