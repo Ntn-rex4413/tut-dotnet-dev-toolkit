@@ -1,16 +1,33 @@
 ﻿using System.Text.Json;
 using DeserializerConsole.Models;
 
-string fileName = "person.json";
-
-string jsonString = File.ReadAllText(fileName);
-
 var opt = new JsonSerializerOptions
 {
     PropertyNameCaseInsensitive = true
 };
 
-Person? person = JsonSerializer.Deserialize<Person>(jsonString, opt);
+// normally use HttpClientFactory for thread safety etc.
+using HttpClient client = new HttpClient()
+{
+    BaseAddress = new Uri("http://localhost:5138")
+};
 
-// ! is not a best practice, normally check if it isn't null
-Console.WriteLine($"The first name is: {person!.LastName}");
+var response = await client.GetAsync("/weatherforecast");
+
+if (response.IsSuccessStatusCode)
+{
+    var temperatures = await JsonSerializer.
+        DeserializeAsync<Temperature[]>(await response.Content.ReadAsStreamAsync(), opt);
+
+    if (temperatures != null)
+    {
+        foreach (var temperature in temperatures)
+        {
+            Console.WriteLine($"Summary: {temperature.Summary}");
+        }
+    }
+}
+else
+{
+    Console.WriteLine($"Whoops! Error: {response.StatusCode}");
+}
