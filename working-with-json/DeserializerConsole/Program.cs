@@ -1,11 +1,4 @@
-﻿using System.Net.Http.Json;
-using System.Text.Json;
-using DeserializerConsole.Models;
-
-var opt = new JsonSerializerOptions
-{
-    PropertyNameCaseInsensitive = true
-};
+﻿using System.Text.Json;
 
 // normally use HttpClientFactory for thread safety etc.
 using HttpClient client = new HttpClient()
@@ -13,13 +6,25 @@ using HttpClient client = new HttpClient()
     BaseAddress = new Uri("http://localhost:5138")
 };
 
-var temperatures = await client.GetFromJsonAsync<Temperature[]>("weatherforecast", opt);
+var response = await client.GetAsync("weatherforecast");
 
-if (temperatures != null)
+if (response.IsSuccessStatusCode)
 {
-    foreach (var temperature in temperatures)
+    var jsonString = await response.Content.ReadAsStringAsync();
+
+    using (JsonDocument jsonDocument = JsonDocument.Parse(jsonString))
     {
-        Console.WriteLine($"Summary: {temperature.Summary}");
+        JsonElement root = jsonDocument.RootElement;
+
+        Console.WriteLine(root.ValueKind);
+
+        foreach (var temp in root.EnumerateArray())
+        {
+            Console.WriteLine(temp.GetProperty("summary").ToString());
+        }
     }
 }
-
+else
+{
+    Console.WriteLine($"Whoops! Error: {response.StatusCode}");
+}
