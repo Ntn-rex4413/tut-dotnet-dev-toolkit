@@ -6,7 +6,6 @@ namespace DeserializerConsole.Models
     {
         public int Id { get; set; }
 
-        [JsonPropertyName("firstname")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? FirstName { get; set; }
 
