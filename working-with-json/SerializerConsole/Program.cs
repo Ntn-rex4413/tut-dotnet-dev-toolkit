@@ -11,7 +11,12 @@ var person = new Person
     IsAlive = false
 };
 
-string jsonString = JsonSerializer.Serialize(person);
+var opt = new JsonSerializerOptions
+{
+    WriteIndented = true,
+};
+
+string jsonString = JsonSerializer.Serialize(person, opt);
 
 string fileName = "person.json";
 
