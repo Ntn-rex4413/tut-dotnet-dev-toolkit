@@ -21,5 +21,9 @@ namespace SerializerConsole.Models
         public Address? Address { get; set; }
 
         public IList<Phone>? Phones { get; set; }
+
+        [JsonInclude]
+        public string? EyeColor;
+        // also - private props/fields are not exposed to serializer by default
     }
 }

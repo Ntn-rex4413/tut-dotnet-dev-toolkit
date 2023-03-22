@@ -5,7 +5,7 @@ using System.Text.Json;
 var person = new Person
 {
     Id = 1,
-    //FirstName = "Sean",
+    FirstName = "Sean",
     LastName = "Connery",
     Age = 90,
     IsAlive = false,
@@ -19,13 +19,16 @@ var person = new Person
     {
         new Phone{PhoneType = "Home", PhoneNumber = "03452131258"},
         new Phone{PhoneType = "Mobile", PhoneNumber = "03333337258"},
-    }
+    },
+    EyeColor = "Blue"
 };
 
 var opt = new JsonSerializerOptions
 {
     WriteIndented = true,
     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+    // can use this instead of decorating fields if there's no need to pick and choose
+    //IncludeFields = true
 };
 
 string jsonString = JsonSerializer.Serialize(person, opt);

@@ -1,5 +1,6 @@
 {
   "id": 1,
+  "firstName": "Sean",
   "surname": "Connery",
   "age": 90,
   "address": {
@@ -16,5 +17,6 @@
       "phoneType": "Mobile",
       "phoneNumber": "03333337258"
     }
-  ]
+  ],
+  "eyeColor": "Blue"
 }
