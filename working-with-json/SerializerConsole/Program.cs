@@ -14,6 +14,7 @@ var person = new Person
 var opt = new JsonSerializerOptions
 {
     WriteIndented = true,
+    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
 };
 
 string jsonString = JsonSerializer.Serialize(person, opt);
