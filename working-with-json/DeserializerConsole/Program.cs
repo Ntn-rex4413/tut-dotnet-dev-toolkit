@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Net.Http.Json;
+using System.Text.Json;
 using DeserializerConsole.Models;
 
 var opt = new JsonSerializerOptions
@@ -12,22 +13,13 @@ using HttpClient client = new HttpClient()
     BaseAddress = new Uri("http://localhost:5138")
 };
 
-var response = await client.GetAsync("/weatherforecast");
+var temperatures = await client.GetFromJsonAsync<Temperature[]>("weatherforecast", opt);
 
-if (response.IsSuccessStatusCode)
+if (temperatures != null)
 {
-    var temperatures = await JsonSerializer.
-        DeserializeAsync<Temperature[]>(await response.Content.ReadAsStreamAsync(), opt);
-
-    if (temperatures != null)
+    foreach (var temperature in temperatures)
     {
-        foreach (var temperature in temperatures)
-        {
-            Console.WriteLine($"Summary: {temperature.Summary}");
-        }
+        Console.WriteLine($"Summary: {temperature.Summary}");
     }
 }
-else
-{
-    Console.WriteLine($"Whoops! Error: {response.StatusCode}");
-}
+
