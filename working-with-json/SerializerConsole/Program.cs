@@ -1,4 +1,5 @@
 ﻿
+using SerializerConsole.Helpers;
 using SerializerConsole.Models;
 using System.Text.Json;
 
@@ -26,7 +27,7 @@ var person = new Person
 var opt = new JsonSerializerOptions
 {
     WriteIndented = true,
-    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+    PropertyNamingPolicy = new LowerCaseNamingPolicy(),
     // can use this instead of decorating fields if there's no need to pick and choose
     //IncludeFields = true
 };
