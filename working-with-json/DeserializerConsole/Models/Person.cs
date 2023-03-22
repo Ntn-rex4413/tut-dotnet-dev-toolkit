@@ -21,8 +21,5 @@ namespace DeserializerConsole.Models
         public Address? Address { get; set; }
 
         public IList<Phone>? Phones { get; set; }
-
-        [JsonInclude]
-        public string? EyeColor;
     }
 }
