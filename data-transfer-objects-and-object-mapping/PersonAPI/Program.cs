@@ -60,7 +60,7 @@ app.MapPut("api/v1/people/{id}", async (AppDbContext context, int id, Person per
 {
     var personModel = await context.People.FindAsync(id);
 
-    if (person == null)
+    if (personModel == null)
     {
         return Results.NotFound();
     }
