@@ -11,7 +11,7 @@ namespace PersonAPI.Profiles
             // Source -> Destination
             CreateMap<Person, PersonReadDto>()
                 // ~ in our destination Age property maps to YearsAlive property in our source
-                .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.YearsAlive));
+                .ForMember(dest => dest.Age, opt => opt.MapFrom<AgeResolver>());
 
             // Map for creation of models
             CreateMap<PersonCreateDto, Person>()
