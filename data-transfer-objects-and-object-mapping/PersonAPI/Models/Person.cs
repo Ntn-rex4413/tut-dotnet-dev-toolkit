@@ -28,5 +28,7 @@ namespace PersonAPI.Models
                 return today.Year - int.Parse(splitDob[0]);
             }
         }
+
+        public string? House { get; set; }
     }
 }
