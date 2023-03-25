@@ -20,6 +20,8 @@ namespace PersonAPI.Profiles
             // Map for updating of models
             CreateMap<PersonUpdateDto, Person>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
+
+            CreateMap<string, int>().ConvertUsing<IntTypeConverter>();
         }
     }
 }
