@@ -16,6 +16,10 @@ namespace PersonAPI.Profiles
             // Map for creation of models
             CreateMap<PersonCreateDto, Person>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
+
+            // Map for updating of models
+            CreateMap<PersonUpdateDto, Person>()
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
         }
     }
 }
