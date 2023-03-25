@@ -15,5 +15,18 @@ namespace PersonAPI.Models
 
         [Required]
         public string? DoB { get; set; }
+
+        public int YearsAlive
+        {
+            get
+            {
+                var today = DateTime.Today;
+
+                var splitDob = DoB!.Split("-");
+
+                // doesn't work correctly for leap years etc.
+                return today.Year - int.Parse(splitDob[0]);
+            }
+        }
     }
 }
