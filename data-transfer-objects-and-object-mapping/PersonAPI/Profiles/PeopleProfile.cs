@@ -14,7 +14,8 @@ namespace PersonAPI.Profiles
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.YearsAlive));
 
             // Map for creation of models
-            CreateMap<PersonCreateDto, Person>();
+            CreateMap<PersonCreateDto, Person>()
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
         }
     }
 }
