@@ -5,7 +5,7 @@ using ToDoAPI.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(opt => 
-    opt.UseInMemoryDatabase("ToDoDB"));
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("SQLCon")));
 
 var app = builder.Build();
 
@@ -27,5 +27,24 @@ app.MapPost("api/todo", async (AppDbContext context, ToDo toDo) =>
     return Results.Created($"api/todo/{toDo.Id}", toDo);
 });
 
-app.Run();
+// normally not done in production - migrating database on startup,
+// SQL server should be running, as in docker-compose.yaml it's specified
+// that the program depends_on the sqlserver
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+        dbContext.Database.Migrate();
+
+        Console.WriteLine("Database migrated successfully");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Could not migrate DB: {ex.Message}");
+    }
+}
+
+    app.Run();
 
