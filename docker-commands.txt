@@ -1,0 +1,84 @@
+checking version
+
+	docker -v
+
+listing running containers
+
+	docker ps
+
+listing all containers
+
+	docker ps --all
+
+listing downloaded images
+
+	docker images
+
+downloading an image
+
+	docker pull <imagename>
+
+	example:
+		docker pull mcr.microsoft.com/mssql/server:2022-latest
+
+running an image (creating a new container)
+
+	docker run -e <environment argument> -p externalport:internalport -d imagename
+
+	example:
+		docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Pa$$w0rd!' -e 'MSSQL_PID=Express' -p 1433:1433 -d mcr.microsoft.com/mssql/server:2022-latest
+		// to connect to it via SSMS pick:
+		Sever type: 	Database Engine
+		Server name: 	localhost,1433	(1433 as the external port from mapping)
+		Authenticaion: 	SQL Server Authentication
+		Login: 		sa
+		Password: 	Pa$$w0rd!
+
+		docker run -p 8080:80 njrex4413/todoapi
+
+		docker run -p 8080:80 -p 8081:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8081 -e ASPNETCORE_ENVIRONMENT=Development -v $env:APPDATA\microsoft\UserSecrets\:/root/.microsoft/usersecrets -v $env:USERPROFILE\.aspnet\https:/root/.aspnet/https/ njrex4413/todoapi
+
+stopping a container
+
+	docker stop <containerid>
+	// data is persisted in the container when you stop it
+
+starting a stopped container
+
+	docker start <containerid>
+
+deleting a container
+
+	docker rm <containerid>
+
+building an image
+
+	docker build -t <dockerhubid>/<imagename> .
+	-t stands for tag
+	prefixing with dockerhub id is good practice
+	has to be ALL LOWERCASE
+	remember aboud the . at the end
+	// the same command to build again after changes in the code
+
+login to dockerhub
+
+	docker login
+
+publish image to dockerhub
+
+	docker push <imagename>
+
+running image(s) with docker-compose.yaml file
+
+	docker compose up -d
+
+stopping after docker compose and keeping stopped containers
+
+	docker compose stop
+	//docker compose up -d to start again the same containers, not creating new
+
+stopping after docker compose and deleting stopped containers
+
+	docker compose down
+
+
