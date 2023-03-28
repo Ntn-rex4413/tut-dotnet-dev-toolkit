@@ -1,6 +1,9 @@
+using AutoMapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using MinApi.Data;
+using MinApi.Dtos;
+using MinApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +32,70 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapGet("api/v1/commands", async (ICommandRepo repo, IMapper mapper) =>
+{
+    var commands = await repo.GetAllCommands();
+
+    return Results.Ok(mapper.Map<IEnumerable<CommandReadDto>>(commands));
+});
+
+app.MapGet("api/v1/commands/{id}", async (int id, ICommandRepo repo, IMapper mapper) =>
+{
+    var command = await repo.GetSingleCommandById(id);
+
+    if (command == null)
+    {
+        return Results.NotFound();
+    }
+
+    return Results.Ok(mapper.Map<CommandReadDto>(command));
+});
+
+app.MapPost("api/v1/commands", async (CommandCreateDto commandCreateDto, ICommandRepo repo, IMapper mapper) =>
+{
+    var command = mapper.Map<Command>(commandCreateDto);
+
+    await repo.CreateCommand(command);
+
+    await repo.SaveChanges();
+
+    var commandReadDto = mapper.Map<CommandReadDto>(command);
+
+    return Results.Created($"api/v1/commands/{command.Id}", commandReadDto);
+});
+
+app.MapPut("api/v1/commands/{id}", async (int id, CommandUpdateDto commandUpdateDto, ICommandRepo repo, IMapper mapper) =>
+{
+    var command = await repo.GetSingleCommandById(id);
+
+    if (command == null)
+    {
+        return Results.NotFound();
+    }
+
+    mapper.Map(commandUpdateDto, command);
+
+    await repo.SaveChanges();
+
+    return Results.NoContent();
+});
+
+app.MapDelete("api/v1/commands/{id}", async (int id, ICommandRepo repo, IMapper mapper) =>
+{
+    var command = await repo.GetSingleCommandById(id);
+
+    if (command == null)
+    {
+        return Results.NotFound();
+    }
+
+    repo.DeleteCommand(command);
+
+    await repo.SaveChanges();
+
+    return Results.NoContent();
+});
 
 app.Run();
 
