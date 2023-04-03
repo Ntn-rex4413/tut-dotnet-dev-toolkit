@@ -6,7 +6,7 @@ ConnectionFactory factory = new();
 factory.Uri = new Uri("amqp://guest:guest@localhost:5672");
 
 // name for this application
-factory.ClientProvidedName = "Rabbit ReceiverOne App";
+factory.ClientProvidedName = "Rabbit ReceiverTwo App";
 
 IConnection cnn = factory.CreateConnection();
 
@@ -33,7 +33,7 @@ var consumer = new EventingBasicConsumer(channel);
 
 consumer.Received += (sender, args) =>
 {
-    Task.Delay(TimeSpan.FromSeconds(5)).Wait();
+    Task.Delay(TimeSpan.FromSeconds(3)).Wait();
 
     var body = args.Body.ToArray();
 
